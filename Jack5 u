@@ -661,7 +661,7 @@ task.spawn(function()
                         if not humanoid or humanoid.Health > 0 then
                             break
                         end
-                    until tick() - startTime >= 15
+                    until tick() - startTime >= 150
 
                     if humanoid and humanoid.Health <= 0 then
                         pcall(function()
