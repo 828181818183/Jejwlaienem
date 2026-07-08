@@ -632,65 +632,7 @@ Tab:AddToggle({
 		end)
 	end
 })
-local Players = game:GetService("Players")
-local LocalPlayer = Players.LocalPlayer
 
-local AutoRestart = false
-
-local function GetCharacter()
-    return workspace.Characters:FindFirstChild(LocalPlayer.Name) or LocalPlayer.Character
-end
-
-task.spawn(function()
-    while task.wait(1) do
-        if AutoRestart then
-            local character = GetCharacter()
-
-            if character then
-                local humanoid = character:FindFirstChild("Humanoid")
-
-                if humanoid and humanoid.Health <= 0 then
-                    local startTime = tick()
-
-                    repeat
-                        task.wait(1)
-
-                        character = GetCharacter()
-                        humanoid = character and character:FindFirstChild("Humanoid")
-
-                        if not humanoid or humanoid.Health > 0 then
-                            break
-                        end
-                    until tick() - startTime >= 150
-
-                    if humanoid and humanoid.Health <= 0 then
-                        pcall(function()
-                            game:GetService("ReplicatedStorage")
-                                :WaitForChild("Packages")
-                                :WaitForChild("_Index")
-                                :WaitForChild("sleitnick_knit@1.4.7")
-                                :WaitForChild("knit")
-                                :WaitForChild("Services")
-                                :WaitForChild("DungeonLobbyService")
-                                :WaitForChild("RF")
-                                :WaitForChild("StartDungeon")
-                                :InvokeServer()
-                        end)
-                    end
-                end
-            end
-        end
-    end
-end)
-
--- Orion Lib Toggle
-Tab:AddToggle({
-    Name = "Tự động chơi.lai khi chết",
-    Default = false,
-    Callback = function(Value)
-        AutoRestart = Value
-    end
-})
 local Section = Tab2:AddSection({
 	Name = "Owner Script"
 })
