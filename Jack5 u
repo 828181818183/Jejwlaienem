@@ -1,0 +1,604 @@
+local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/jensonhirst/Orion/main/source')))()
+local Window = OrionLib:MakeWindow({
+    Name = "nơi ấn nấu Basic",
+    HidePremium = false,
+    SaveConfig = true,
+    ConfigFolder = "AutoFarmConfig"
+})
+
+local Tab = Window:MakeTab({
+    Name = "Basic free",
+    Icon = "rbxassetid://4483362458",
+    PremiumOnly = false
+})
+local Tab2 = Window:MakeTab({
+    Name = "ThÃ´ng tin Script",
+    Icon = "rbxassetid://4483362458",
+    PremiumOnly = false
+})
+
+
+Tab:AddToggle({
+	Name = "Auto energy blast",
+	Default = false,
+	Callback = function(v)
+
+		AutoFarm = v
+
+		task.spawn(function()
+
+			while AutoFarm do
+
+				if not FightingGarriot then
+
+					pcall(function()
+
+						local eventFolder =
+							workspace:FindFirstChild("World Mobs")
+							and workspace["World Mobs"]:FindFirstChild("Event Mobs")
+
+						-- Chá»‰ farm khi Event Mobs cÃ³ mob
+						if eventFolder and #eventFolder:GetChildren() > 0 then
+
+							local target = GetTarget()
+
+							if target then
+
+								LockRemote:FireServer(target)
+
+								local pos =
+									target.HumanoidRootPart.Position
+
+								local args = {
+									{
+										Camera = workspace.CurrentCamera.CFrame,
+										SkillId = "101",
+										Began = true,
+										CFrame = CFrame.new(pos),
+										["Typ\208\181"] = 1,
+										Aim = pos
+									}
+								}
+
+								SkillRemote:FireServer(unpack(args))
+
+							end
+						end
+					end)
+
+				end
+
+				task.wait(0.08)
+			end
+		end)
+	end
+})
+Tab:AddToggle({
+	Name = "Khoá chặt all mobs",
+	Default = true,
+	Callback = function(Value)
+		getgenv().AutoLock = Value
+
+		task.spawn(function()
+			while getgenv().AutoLock do
+				local worldMobs = workspace:FindFirstChild("World Mobs")
+
+				if worldMobs then
+					for _, folder in ipairs(worldMobs:GetChildren()) do
+						for _, mob in ipairs(folder:GetChildren()) do
+							if mob:IsA("Model") then
+								game:GetService("ReplicatedStorage")
+									.Packages._Index["sleitnick_knit@1.4.7"]
+									.knit.Services.SkillManager.RE.LockedOnChanged
+									:FireServer(mob)
+
+								task.wait(0.05)
+							end
+						end
+					end
+				end
+
+				task.wait(0.01)
+			end
+		end)
+	end
+})
+local AutoNextArea = true
+local AutoNextAreaLoop
+
+Tab:AddToggle({
+	Name = "tự động skip",
+	Default = true,
+	Callback = function(Value)
+		AutoNextArea = Value
+
+		if Value and not AutoNextAreaLoop then
+			AutoNextAreaLoop = task.spawn(function()
+				while true do
+					if AutoNextArea then
+						pcall(function()
+							workspace:WaitForChild("Dungeon")
+								:WaitForChild("Stages")
+								:WaitForChild("0")
+								:WaitForChild("NextArea")
+								:WaitForChild("DungeonNextAreaPad")
+								:WaitForChild("RE")
+								:WaitForChild("Interact")
+								:FireServer()
+						end)
+					end
+					task.wait(0.9)
+				end
+			end)
+		end
+	end
+})
+local SpamSkill108 = true
+
+Tab:AddToggle({
+	Name = "tự độg hút máu phábhuy ·",
+	Default = true,
+	Callback = function(Value)
+		SpamSkill108 = Value
+
+		if SpamSkill108 then
+			task.spawn(function()
+				while SpamSkill108 do
+					local args = {
+						{
+							Camera = CFrame.new(
+								74.2727279663086, 251.0009002685547, -28.747745513916016,
+								-0.9511321783065796, -0.044049736112356186, 0.3056260347366333,
+								0, 0.9897724390029907, 0.14265543222427368,
+								-0.308784157037735, 0.13568417727947235, -0.9414043426513672
+							),
+							SkillId = "108",
+							Began = true,
+							CFrame = CFrame.new(70.45240020751953, 247.81771850585938, -16.98019027709961),
+							["Typ\208\181"] = 1,
+							Aim = vector.create(70.45240020751953, 247.81771850585938, -66.98019409179688)
+						}
+					}
+
+					game:GetService("ReplicatedStorage")
+						:WaitForChild("Remotes")
+						:WaitForChild("SkillRemote")
+						:FireServer(unpack(args))
+
+					task.wait(0.01) -- chá»‰nh tá»‘c Ä‘á»™ spam
+				end
+			end)
+		end
+	end
+})
+local SpamSkill108 = true
+
+Tab:AddToggle({
+	Name = "Normal Attack",
+	Default = false,
+	Callback = function(Value)
+		SpamSkill108 = Value
+
+		if SpamSkill108 then
+			task.spawn(function()
+				while SpamSkill108 do
+					local args = {
+						{
+							Camera = CFrame.new(
+								74.2727279663086, 251.0009002685547, -28.747745513916016,
+								-0.9511321783065796, -0.044049736112356186, 0.3056260347366333,
+								0, 0.9897724390029907, 0.14265543222427368,
+								-0.308784157037735, 0.13568417727947235, -0.9414043426513672
+							),
+							SkillId = "1",
+							Began = true,
+							CFrame = CFrame.new(70.45240020751953, 247.81771850585938, -16.98019027709961),
+							["Typ\208\181"] = 1,
+							Aim = vector.create(70.45240020751953, 247.81771850585938, -66.98019409179688)
+						}
+					}
+
+					game:GetService("ReplicatedStorage")
+						:WaitForChild("Remotes")
+						:WaitForChild("SkillRemote")
+						:FireServer(unpack(args))
+
+					task.wait(0.01) -- chá»‰nh tá»‘c Ä‘á»™ spam
+				end
+			end)
+		end
+	end
+})
+local AutoPhePha = true
+
+Tab:AddToggle({
+	Name = "auto quái thúº",
+	Default = true,
+	Callback = function(Value)
+		AutoPhePha = Value
+
+		task.spawn(function()
+			while AutoPhePha do
+				pcall(function()
+					local player = game.Players.LocalPlayer
+					local charFolder = workspace:FindFirstChild("Characters")
+
+					if charFolder then
+						local char = charFolder:FindFirstChild(player.Name)
+
+						if char and not char:FindFirstChild("TechniqueEffect") then
+							local args = {
+								{
+									Camera = CFrame.new(
+										-28.790475845336914,
+										298.4656677246094,
+										-91.82173156738281,
+										0.8630251884460449,
+										0.06684061139822006,
+										-0.5007192492485046,
+										0,
+										0.9912075996398926,
+										0.1323155164718628,
+										0.5051608085632324,
+										-0.11419162154197693,
+										0.855437159538269
+									),
+									SkillId = "8",
+									Began = true,
+									CFrame = CFrame.new(
+										-20.313318252563477,
+										294.6113586425781,
+										-106.30424499511719,
+										0.863025426864624,
+										0.06684055924415588,
+										-0.5007189512252808,
+										-8.083265612413015e-09,
+										0.9912076592445374,
+										0.1323154717683792,
+										0.5051605105400085,
+										-0.11419161409139633,
+										0.8554373979568481
+									),
+									["Typ\208\181"] = 1,
+									Aim = vector.create(
+										4.722629547119141,
+										287.9955749511719,
+										-149.07611083984375
+									)
+								}
+							}
+
+							game:GetService("ReplicatedStorage")
+								:WaitForChild("Remotes")
+								:WaitForChild("SkillRemote")
+								:FireServer(unpack(args))
+						end
+					end
+				end)
+
+				task.wait(1.5)
+			end
+		end)
+	end
+})
+getgenv().AutoStart = true
+
+Tab:AddToggle({
+	Name = "Tự động chơi lại",
+	Default = true,
+	Callback = function(Value)
+		getgenv().AutoStart = Value
+
+		task.spawn(function()
+			local started = false
+
+			while getgenv().AutoStart do
+				task.wait(3.2)
+
+				local worldMobs = workspace:FindFirstChild("World Mobs")
+				local eventMobs = worldMobs and worldMobs:FindFirstChild("Event Mobs")
+				local garriot = eventMobs and eventMobs:FindFirstChild("Garriot")
+
+				if garriot then
+					local humanoid = garriot:FindFirstChildOfClass("Humanoid")
+
+					if humanoid then
+						if humanoid.Health > 0 then
+							started = true
+						end
+
+						if started and humanoid.Health <= 0 then
+							started = false
+
+							game:GetService("StarterGui"):SetCore("SendNotification", {
+								Title = "Auto Start",
+								Text = "ChÆ¡i láº¡i ",
+								Duration = 5
+							})
+
+							task.wait(4.5)
+
+							if getgenv().AutoStart then
+								game:GetService("ReplicatedStorage")
+									:WaitForChild("Packages")
+									:WaitForChild("_Index")
+									:WaitForChild("sleitnick_knit@1.4.7")
+									:WaitForChild("knit")
+									:WaitForChild("Services")
+									:WaitForChild("DungeonLobbyService")
+									:WaitForChild("RF")
+									:WaitForChild("StartDungeon")
+									:InvokeServer()
+							end
+						end
+					end
+				end
+			end
+		end)
+	end
+})
+local SelectedTool = 2
+local AutoEquipTools = false
+
+local Dropdown = Tab:AddDropdown({
+	Name = "Chọn slot vũ khí đang dù ng",
+	Default = "2",
+	Options = {"1","2","3","4","5","6"},
+	Callback = function(Value)
+		SelectedTool = tonumber(Value)
+	end
+})
+
+Tab:AddToggle({
+	Name = "trang bị",
+	Default = false,
+	Callback = function(Value)
+		AutoEquipTools = Value
+
+		if Value then
+			task.spawn(function()
+				while AutoEquipTools do
+					local args = {
+						SelectedTool
+					}
+
+					game:GetService("ReplicatedStorage")
+						:WaitForChild("Packages")
+						:WaitForChild("_Index")
+						:WaitForChild("sleitnick_knit@1.4.7")
+						:WaitForChild("knit")
+						:WaitForChild("Services")
+						:WaitForChild("ToolService")
+						:WaitForChild("RE")
+						:WaitForChild("UpdatePlayerToolbarSelection")
+						:FireServer(unpack(args))
+
+					task.wait(0.1)
+				end
+			end)
+		end
+	end
+})
+local TweenService = game:GetService("TweenService")
+local RunService = game:GetService("RunService")
+
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local hrp = character:WaitForChild("HumanoidRootPart")
+
+player.CharacterAdded:Connect(function(newChar)
+    character = newChar
+    hrp = newChar:WaitForChild("HumanoidRootPart")
+end)
+
+local AutoNgungu = false
+local mainConnection
+
+local HEIGHT_ABOVE = 5.8
+
+Tab:AddToggle({
+    Name = "Auto Ngungu",
+    Default = false,
+    Callback = function(Value)
+        AutoNgungu = Value
+
+        if Value then
+            mainConnection = RunService.Heartbeat:Connect(function()
+                if not AutoNgungu or not hrp then return end
+
+                local bossFolder = workspace:FindFirstChild("World Mobs")
+                    and workspace["World Mobs"]:FindFirstChild("Event Mobs")
+
+                if not bossFolder then return end
+
+                local targetBoss
+                local nearest = math.huge
+
+                -- TÃ¬m mob Event cÃ²n sá»‘ng gáº§n nháº¥t
+                for _, mob in ipairs(bossFolder:GetChildren()) do
+                    local hum = mob:FindFirstChild("Humanoid")
+                    local root = mob:FindFirstChild("HumanoidRootPart")
+
+                    if hum and root and hum.Health > 0 then
+                        local dist = (hrp.Position - root.Position).Magnitude
+                        if dist < nearest then
+                            nearest = dist
+                            targetBoss = mob
+                        end
+                    end
+                end
+
+                if not targetBoss then return end
+
+                local bossHRP = targetBoss.HumanoidRootPart
+
+                hrp.Velocity = Vector3.zero
+                hrp.AssemblyLinearVelocity = Vector3.zero
+                hrp.AssemblyAngularVelocity = Vector3.zero
+
+                TweenService:Create(
+                    hrp,
+                    TweenInfo.new(0.22, Enum.EasingStyle.Sine, Enum.EasingDirection.Out),
+                    {
+                        CFrame = CFrame.new(
+                            bossHRP.Position + Vector3.new(0, HEIGHT_ABOVE, 0),
+                            bossHRP.Position
+                        )
+                    }
+                ):Play()
+
+                if nearest <= 30 then
+                    pcall(function()
+                        game:GetService("ReplicatedStorage")
+                            .Packages._Index["sleitnick_knit@1.4.7"]
+                            .knit.Services.SkillManagerV2.RE.ExecuteSkill
+                            :FireServer(
+                                "Weapons_20_3",
+                                {
+                                    TargetPos = bossHRP.Position
+                                },
+                                18
+                            )
+                    end)
+                end
+            end)
+        else
+            if mainConnection then
+                mainConnection:Disconnect()
+                mainConnection = nil
+            end
+        end
+    end
+})
+local AutoSkill = true
+
+Tab:AddToggle({
+	Name = "auto dls Skill ",
+	Default = true,
+	Callback = function(Value)
+		AutoSkill = Value
+
+		if Value then
+			task.spawn(function()
+				while AutoSkill do
+					local args = {
+						"Weapons_20_3",
+						{
+							TargetPos = vector.create(2170.0126953125, 588.9179077148438, -3238.490234375)
+						},
+						3
+					}
+
+					game:GetService("ReplicatedStorage")
+						:WaitForChild("Packages")
+						:WaitForChild("_Index")
+						:WaitForChild("sleitnick_knit@1.4.7")
+						:WaitForChild("knit")
+						:WaitForChild("Services")
+						:WaitForChild("SkillManagerV2")
+						:WaitForChild("RE")
+						:WaitForChild("ExecuteSkill")
+						:FireServer(unpack(args))
+
+					task.wait(0.01)
+				end
+			end)
+		end
+	end
+})
+local AutoPhePha = true
+
+Tab:AddToggle({
+	Name = "tự động biến hình ",
+	Default = true,
+	Callback = function(Value)
+		AutoPhePha = Value
+
+		task.spawn(function()
+			while AutoPhePha do
+				pcall(function()
+					local player = game.Players.LocalPlayer
+					local charFolder = workspace:FindFirstChild("Characters")
+
+					if charFolder then
+						local char = charFolder:FindFirstChild(player.Name)
+
+						if char and not char:FindFirstChild("Mode") then
+							local args = {
+								{
+									Camera = CFrame.new(
+										-28.790475845336914,
+										298.4656677246094,
+										-91.82173156738281,
+										0.8630251884460449,
+										0.06684061139822006,
+										-0.5007192492485046,
+										0,
+										0.9912075996398926,
+										0.1323155164718628,
+										0.5051608085632324,
+										-0.11419162154197693,
+										0.855437159538269
+									),
+									SkillId = "10",
+									Began = true,
+									CFrame = CFrame.new(
+										-20.313318252563477,
+										294.6113586425781,
+										-106.30424499511719,
+										0.863025426864624,
+										0.06684055924415588,
+										-0.5007189512252808,
+										-8.083265612413015e-09,
+										0.9912076592445374,
+										0.1323154717683792,
+										0.5051605105400085,
+										-0.11419161409139633,
+										0.8554373979568481
+									),
+									["Typ\208\181"] = 1,
+									Aim = vector.create(
+										4.722629547119141,
+										287.9955749511719,
+										-149.07611083984375
+									)
+								}
+							}
+
+							game:GetService("ReplicatedStorage")
+								:WaitForChild("Remotes")
+								:WaitForChild("SkillRemote")
+								:FireServer(unpack(args))
+						end
+					end
+				end)
+
+				task.wait(1.5)
+			end
+		end)
+	end
+})
+local Section = Tab2:AddSection({
+	Name = "Owner Script"
+})
+local Section = Tab2:AddSection({
+	Name = "Ducan"
+})
+local Section = Tab2:AddSection({
+	Name = "huyvo"
+})
+local Section = Tab2:AddSection({
+	Name = "???"
+})
+local Section = Tab2:AddSection({
+	Name = "Basic hơi.lỏ"
+})
+local Section = Tab2:AddSection({
+	Name = "Normal có thể win dễ dàng "
+})
+local Section = Tab2:AddSection({
+	Name = "Premium là hàng vip"
+})
+local Section = Tab2:AddSection({
+	Name = "Admin Gui band đc người Sử dụng Basic"
+})
