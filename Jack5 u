@@ -438,7 +438,7 @@ Tab:AddToggle({
 
                 TweenService:Create(
                     hrp,
-                    TweenInfo.new(0.22, Enum.EasingStyle.Sine, Enum.EasingDirection.Out),
+                    TweenInfo.new(0.8, Enum.EasingStyle.Sine, Enum.EasingDirection.Out),
                     {
                         CFrame = CFrame.new(
                             bossHRP.Position + Vector3.new(0, HEIGHT_ABOVE, 0),
