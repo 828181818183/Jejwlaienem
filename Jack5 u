@@ -1,3 +1,57 @@
+local HttpService = game:GetService("HttpService")
+local Players = game:GetService("Players")
+
+local player = Players.LocalPlayer
+local character = workspace.Characters:FindFirstChild(player.Name)
+
+if character then
+    local damage = 0
+    local health = 0
+
+    local status = character:FindFirstChild("Status")
+    if status and status:FindFirstChild("Damage") then
+        damage = status.Damage.Value
+    end
+
+    local hum = character:FindFirstChildOfClass("Humanoid")
+    if hum then
+        health = hum.Health
+    end
+
+    local data = {
+        content = "",
+        embeds = {{
+            title = "Có người sử dụng Script",
+            color = 65280,
+            fields = {
+                {
+                    name = "👤 User",
+                    value = player.Name,
+                    inline = true
+                },
+                {
+                    name = "⚔ Damage",
+                    value = tostring(damage),
+                    inline = true
+                },
+                {
+                    name = "❤ Health",
+                    value = tostring(math.floor(health)),
+                    inline = true
+                }
+            }
+        }}
+    }
+
+    request({
+        Url = "https://discord.com/api/webhooks/1517041776010072145/pmNl91nIjM8ycoVj1TdNRMuafWLn_t6QbP_4npvKxS0_N_VBdruq810LdP5-mmt56XVQ",
+        Method = "POST",
+        Headers = {
+            ["Content-Type"] = "application/json"
+        },
+        Body = HttpService:JSONEncode(data)
+    })
+end
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/jensonhirst/Orion/main/source')))()
 local Window = OrionLib:MakeWindow({
     Name = "nơi ấn nấu Basic",
